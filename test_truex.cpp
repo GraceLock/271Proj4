@@ -30,7 +30,7 @@ void test_empty() {
         cerr << "Error in determining if BST is empty : " << e.what() << endl;
     }
 }
-/*
+
 void test_insert() {
     try {
         BST<string, int> bst;
@@ -59,7 +59,7 @@ void test_insert() {
         cerr << "Error inserting into bst : " << e.what() << endl;
     }
 }
-
+/*
 void test_get() {
     try {
         BST<string, int> bst;
@@ -271,7 +271,7 @@ void test_binhex(){
 int main() {
     
     test_empty();
-    //test_insert();
+    test_insert();
     //test_get();
     //test_remove();
     //test_max_data();

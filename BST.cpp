@@ -64,7 +64,29 @@ string BST<D,T>::to_string() const
 //preconditions: 
 //postconditions:   
 {
-    
+    Node *x = root;
+    string s = "";
+    inOrder(root, s);
+    return s;
+}
+
+//=========================================================================
+// inOrder 
+// Parameters: none
+// Return:	
+//=========================================================================
+template <class D, class T>
+string BST<D,T>::inOrder(Node* r, string s) const
+//preconditions: 
+//postconditions:   
+{
+    Node *x = root;
+    if (x == nullptr)
+        return "";
+
+    inOrder(x->left, s);
+    s = s + std::to_string(x->item.get_key()) + " ";
+    inOrder(x->right, s);
 }
 
 //=========================================================================
