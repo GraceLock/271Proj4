@@ -24,7 +24,7 @@ private:
 
 public:
     BST( void );
-    ~BST(void);
+    ~BST();
     void deleteTree(Node* node);
     void insert( const D data, const T key );
     //void remove(const Node<D, T> &node );

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "BST.h"
+#include <queue>
 
 using namespace std;
 
@@ -64,10 +65,35 @@ string BST<D,T>::to_string() const
 //preconditions: 
 //postconditions:   
 {
-    Node *x = root;
-    string s = "";
-    inOrder(root, s);
-    return s;
+    ostringstream out;
+
+    if (this->root == nullptr)
+        return "";
+
+    std::queue<Node*> q;
+    q.push(root);
+    bool isFirstNode = true;
+
+    while (!q.empty()) {
+        int levelSize = q.size();
+
+        for (int i = 0; i < levelSize; ++i) {
+            Node* current = q.front();
+            q.pop();
+            if (isFirstNode){
+                out << current->item.get_key();
+                isFirstNode = false;
+            }
+            else 
+            out << " " << current->item.get_key();
+
+            if (current->left != nullptr)
+                q.push(current->left);
+            if (current->right != nullptr)
+                q.push(current->right);
+        }
+    }
+    return out.str();
 }
 
 //=========================================================================
@@ -102,27 +128,31 @@ void BST<D,T>::insert( const D data, const T key )
 {
     Element<D, T> elem( data, key );
 
-    //if empty, construct
-    Node *newNode = nullptr;
+    Node *newNode = new Node();
     newNode -> item = elem;
     Node *y = nullptr;
     Node *x = root;
 
-    while ( x != nullptr){
-        y = x;
-        if (elem.get_key() < x->item.get_key())
-            x = x->left;
-        else
-            x = x->right;
-    }
-    
-    newNode->parent = y;
-    if (y == nullptr) {
-        root = newNode;
-    } else if (elem.get_key() < y->item.get_key()) {
-        y->left = newNode;
-    } else {
-        y->right = newNode;
+    if (this->root == nullptr)
+        this->root = newNode;
+
+    else{
+        while ( x != nullptr){
+            y = x;
+            if (elem.get_key() < x->item.get_key())
+                x = x->left;
+            else
+                x = x->right;
+        }
+        
+        newNode->parent = y;
+        if (y == nullptr) {
+            root = newNode;
+        } else if (elem.get_key() < y->item.get_key()) {
+            y->left = newNode;
+        } else {
+            y->right = newNode;
+        }
     }
 }
 
@@ -138,5 +168,5 @@ bool  BST<D,T>::empty( void )
 //preconditions: the tree object exists
 //postconditions: the boolean value returned correctly describes the tree 
 {
-    return root == nullptr;
+    return (root == nullptr);
 }
