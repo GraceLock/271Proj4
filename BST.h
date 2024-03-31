@@ -29,8 +29,9 @@ public:
     void insert( const D data, const T key );
     //void remove(const Node<D, T> &node );
     string to_string( void ) const; 
-    string inOrder(Node* r, string x) const;
+    //string inOrder(Node* r, string x) const;
     bool empty( void );
+    T minimum(Node *x)
     D get( const T k );
     D max_data(void);
     T max_key(void);

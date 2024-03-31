@@ -59,7 +59,7 @@ void test_insert() {
         cerr << "Error inserting into bst : " << e.what() << endl;
     }
 }
-/*
+
 void test_get() {
     try {
         BST<string, int> bst;
@@ -71,12 +71,12 @@ void test_get() {
         val = bst.get(1);
         if(val != "one") {
             cout << "Incorrect get result. Expected \"one\" but got : " << val << endl;
-        }
+        } 
     } catch(exception& e) {
         cerr << "Error in getting data from bst : " << e.what() << endl;
     }
 }
-
+/*
 void test_remove() {
     try {
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
@@ -93,7 +93,7 @@ void test_remove() {
         cerr << "Error in removing node from bst : " << e.what() << endl;
     }
 }
-
+*/
 void test_max_data() {
     try {
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
@@ -157,7 +157,7 @@ void test_min_key() {
         cerr << "Error in determining key of min node in bst : " << e.what() << endl;
     }
 }
-
+/*
 void test_successor() {
     try {
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
@@ -272,12 +272,12 @@ int main() {
     
     test_empty();
     test_insert();
-    //test_get();
+    test_get(); 
     //test_remove();
-    //test_max_data();
-    //test_max_key();
-    //test_min_data();
-    //test_min_key();
+    test_max_data();
+    test_max_key();
+    test_min_data();
+    test_min_key();
     //test_successor();
     //test_in_order();
     //test_trim();
