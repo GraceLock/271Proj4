@@ -59,7 +59,7 @@ void test_insert() {
         cerr << "Error inserting into bst : " << e.what() << endl;
     }
 }
-
+/*
 void test_get() {
     try {
         BST<string, int> bst;
@@ -272,7 +272,7 @@ int main() {
     
     test_empty();
     test_insert();
-    test_get(); 
+    //test_get(); 
     //test_remove();
     test_max_data();
     test_max_key();

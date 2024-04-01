@@ -95,7 +95,7 @@ string BST<D,T>::to_string() const
     }
     return out.str();
 }
-
+/*
 //=========================================================================
 // inOrder 
 // Parameters: none
@@ -114,7 +114,7 @@ string BST<D,T>::inOrder(Node* r, string s) const
     s = s + std::to_string(x->item.get_key()) + " ";
     inOrder(x->right, s);
 }
-
+*/
 //=========================================================================
 // insert 
 // Parameters: 
@@ -250,7 +250,7 @@ D BST<D,T>::min_data()
     }
     return min->item.get_data();
 }
-
+/*
 //=========================================================================
 // get 
 // Parameters: 
@@ -274,7 +274,7 @@ D BST<D,T>::get(const T k)
     }
     return D();
 }
-
+*/
 //=========================================================================
 // successor 
 // Parameters: 
@@ -290,7 +290,7 @@ T BST<D,T>::successor(const T k)
     Node *x = findNode(this, k);
     
     if ( x->right !=  nullptr )
-        return min(x->right);
+        return minimum(x->right);
     Node *y = x->parent;
     while ( y != nullptr && x == y->right){
         x = y;
@@ -317,4 +317,72 @@ T BST<D,T>::minimum(Node *x)
         x = x->left;
     }
     return y->item.get_key();
+}
+/*
+//=========================================================================
+// findNode 
+// Parameters: 
+//  x - root node of a BST 
+// Return:	
+//  
+//=========================================================================
+template <class D, class T>
+Node* BST<D,T>::findNode(Node* x, T key)
+//preconditions: the tree object exists and contains the key k
+//postconditions: 
+{
+    while (x != nullptr && x->item.get_key() != key) {
+        if (k < x->item.get_key())
+            x = x->left;
+        else
+            x = x->right;
+    }
+    return x;
+}
+*/
+
+//=========================================================================
+// remove 
+// Parameters: 
+//   
+// Return:	
+//  
+//=========================================================================
+template <class D, class T>
+void BST<D,T>::remove(const T k)
+//preconditions: the tree object exists and contains the key k
+//postconditions: 
+{
+   Node *x = findNode(this, k);
+
+    //x has no left child, replace x with x.right
+   if(x->left == nullptr){
+    if(x->parent->left == x)
+        x->parent->left = x->right;
+    if(x->parent->right == x)
+        x->parent->right = x->right;
+    x->right->parent = x->parent;
+    delete x;
+   }
+
+   //x has no right child, replace x with x.left
+   else if(x->right == nullptr){
+    if(x->parent->left == x)
+        x->parent->left = x->left;
+    if(x->parent->right == x)
+        x->parent->right = x->left;
+    x->left->parent = x->parent;
+    delete x;
+   }
+
+   //z has both children
+   else T y = successor(x->item.get_key()){
+    if(x->right->item.get_key() == y){
+        //replace z with y
+    }
+    else{
+        //replace y with y.right 
+        //replace x with y
+    }
+   }
 }

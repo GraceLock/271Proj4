@@ -27,12 +27,13 @@ public:
     ~BST();
     void deleteTree(Node* node);
     void insert( const D data, const T key );
-    //void remove(const Node<D, T> &node );
+    void remove(const T k );
     string to_string( void ) const; 
     //string inOrder(Node* r, string x) const;
     bool empty( void );
     T minimum(Node *x)
     D get( const T k );
+    Node* findNode(Node* x, T key);
     D max_data(void);
     T max_key(void);
     D min_data(void);
