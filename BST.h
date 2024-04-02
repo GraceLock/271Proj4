@@ -40,8 +40,8 @@ public:
     D min_data(void);
     T min_key(void);
     T successor( const T k);
-    void trim(T high, T low);
-    void trim_recursive(Node* root, T high, T low);
+    void trim(T low, T high);
+    void trim_recursive(Node* root, T low, T high);
     //Node* triplinkedlist<T>::findNode(const triplinkedlist& tree, const T k);
     void transplant( BST* tree, Node* u, Node* v);
 };

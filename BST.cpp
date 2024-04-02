@@ -447,11 +447,11 @@ void BST<D,T>::transplant(BST* tree, Node* u, Node* v)
 //  
 //=========================================================================
 template <class D, class T>
-void BST<D,T>::trim(T high, T low)
+void BST<D,T>::trim(T low, T high)
 //preconditions: 
 //postconditions: 
 {
-    trim_recursive(this->root, high, low);
+    trim_recursive(this->root, low, high);
 }
 
 //=========================================================================
@@ -462,14 +462,14 @@ void BST<D,T>::trim(T high, T low)
 //  
 //=========================================================================
 template <class D, class T>
-void BST<D,T>::trim_recursive(Node* root, T high, T low)
+void BST<D,T>::trim_recursive(Node* root, T low, T high)
 //preconditions: 
 //postconditions: 
 {
     if(root == nullptr)
         return;
-    trim_recursive(root->left, high, low);
-    trim_recurisve(root->right, high, low);
+    trim_recursive(root->left, low, high);
+    trim_recurisve(root->right, low, high);
 
     if(root->item.get_key() < low || root->item.get_key() > high)
         remove(root->item.get_key());
