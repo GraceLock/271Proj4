@@ -92,7 +92,22 @@ void test_insert() {
         if(bst_str2 != "5 5 6 8") {
             cout << "Incorrect result of to_string. Expected empty string but got : " << bst_str << endl;
         }
-        
+        BST<string, float> bst3;
+        bst3.insert("hi", 4.5);
+        string bst_str3 = bst3.to_string();
+        if(bst_str3 != "4.5") {
+            cout << "Incorrect result of to_string. Expected 4.5 but got : " << bst_str << endl;
+        }
+        bst3.insert("world", 100.1);
+        bst3.insert("dog", 6.9);
+        bst3.insert("apple", 6.9);
+        bst3.insert("apple", 101.999);
+        bst3.insert("", 0.1);
+        bst3.insert("boy", -2.45);
+        bst_str3 = bst3.to_string();
+        if(bst_str3 != "4.5 0.1 100.1 -2.45 6.9 101.999 6.9") {
+            cout << "Incorrect result of to_string. Expected 4.5 but got : " << bst_str << endl;
+        }
     } catch(exception& e) {
         cerr << "Error inserting into bst : " << e.what() << endl;
     }
