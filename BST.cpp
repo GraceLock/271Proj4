@@ -95,14 +95,14 @@ string BST<D,T>::to_string() const
     }
     return out.str();
 }
-/*
+
 //=========================================================================
 // in_order 
 // Parameters: none
 // Return:	
 //=========================================================================
 template <class D, class T>
-string BST<D,T>::in_order() const
+string BST<D,T>::in_order() 
 //preconditions: 
 //postconditions:   
 {
@@ -136,7 +136,7 @@ string BST<D,T>::in_order_recursive(Node *x, string out) const
     return l + root + r;
 }
 
-*/
+
 //=========================================================================
 // insert 
 // Parameters: 
@@ -339,12 +339,10 @@ typename BST<D,T>::Node* BST<D,T>::minimum(Node *x)
 //preconditions: the tree object exists and contains the key k
 //postconditions: the correct successor of the node with key k is returned 
 {
-    Node *y = x->parent;
-    while (x != NULL){
-        y = x;
+    while (x->left != NULL){
         x = x->left;
     }
-    return y;
+    return x;
 }
 
 //=========================================================================
@@ -382,22 +380,24 @@ void BST<D,T>::remove(const T k)
 {
    Node *x = findNode(this->root, k);
 
+   if (x == nullptr){
+    return;
+   }
+
     //x has no left child, replace x with x.right
    if(x->left == nullptr){
     transplant(this, x, x->right);
-    delete x;
    }
 
    //x has no right child, replace x with x.left
    else if(x->right == nullptr){
     transplant(this, x, x->left);
-    delete x;
    }
 
    //x has both children
    else {
-    Node* y = minimum(x->right);
-    if(y != x->right){
+    Node *y = minimum(x->right);
+    if(y->parent != x){
         transplant(this, y, y->right);
         y->right = x->right;
         y->right->parent = y;
@@ -406,9 +406,9 @@ void BST<D,T>::remove(const T k)
     if(y->left != nullptr){
         y->left = x->left;
         y->left->parent = y;
-        delete x;
     }
    }
+   delete x;
 }
 
 //=========================================================================
@@ -427,7 +427,9 @@ void BST<D,T>::transplant(BST* tree, Node* u, Node* v)
         tree->root = v;
     else if (u == u->parent->left)
         u->parent->left = v;
-    else (u->parent->right = v);
+    else {
+        u->parent->right = v;
+    }
     if (v != nullptr)
         v->parent = u->parent;
 }

@@ -29,7 +29,8 @@ public:
     void insert( const D data, const T key );
     void remove(const T k );
     string to_string( void ) const; 
-    //string inOrder(Node* r, string x) const;
+    string in_order();
+    string in_order_recursive(Node *x, string out) const;
     bool empty( void );
     Node* minimum(Node *x);
     D get( const T k );
@@ -39,7 +40,6 @@ public:
     D min_data(void);
     T min_key(void);
     T successor( const T k);
-    string in_order(void);
     void trim(T high, T low);
     void trim_recursive(Node* root, T high, T low);
     //Node* triplinkedlist<T>::findNode(const triplinkedlist& tree, const T k);

@@ -181,7 +181,7 @@ void test_successor() {
         cerr << "Error in determining successor in bst : " << e.what() << endl;
     }
 }
-/*
+
 void test_in_order() {
     try {
         BST<string, int> bst;
@@ -205,7 +205,7 @@ void test_in_order() {
         cerr << "Error getting keys in_order from bst : " << e.what() << endl;
     }
 }
-
+/*
 void test_trim() {
     try {
         BST<string,int> bst;
@@ -279,7 +279,7 @@ int main() {
     test_min_data();
     test_min_key();
     test_successor();
-    //test_in_order();
+    test_in_order();
     //test_trim();
     //test_binhex();
 
