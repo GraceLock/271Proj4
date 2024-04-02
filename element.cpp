@@ -42,7 +42,6 @@ T Element<D,T>::get_key( void ) const
 // Pre condition: element exists 
 // Post condition: correct key vlaue of the element is returned  
 {
-    if ( )
     return key;
 }
 

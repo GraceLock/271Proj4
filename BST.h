@@ -31,7 +31,7 @@ public:
     string to_string( void ) const; 
     //string inOrder(Node* r, string x) const;
     bool empty( void );
-    T minimum(Node *x)
+    Node* minimum(Node *x);
     D get( const T k );
     Node* findNode(Node* x, T key);
     D max_data(void);
@@ -41,8 +41,9 @@ public:
     T successor( const T k);
     string in_order(void);
     void trim(T high, T low);
+    void trim_recursive(Node* root, T high, T low);
     //Node* triplinkedlist<T>::findNode(const triplinkedlist& tree, const T k);
-    void transplant( Node u, Node v);
+    void transplant( BST* tree, Node* u, Node* v);
 };
 
 #endif

@@ -250,7 +250,7 @@ D BST<D,T>::min_data()
     }
     return min->item.get_data();
 }
-/*
+
 //=========================================================================
 // get 
 // Parameters: 
@@ -274,7 +274,7 @@ D BST<D,T>::get(const T k)
     }
     return D();
 }
-*/
+
 //=========================================================================
 // successor 
 // Parameters: 
@@ -287,16 +287,22 @@ T BST<D,T>::successor(const T k)
 //preconditions: the tree object exists and contains the key k
 //postconditions: the correct successor of the node with key k is returned 
 {
-    Node *x = findNode(this, k);
+    Node *x = findNode(this->root, k);
     
-    if ( x->right !=  nullptr )
-        return minimum(x->right);
-    Node *y = x->parent;
-    while ( y != nullptr && x == y->right){
-        x = y;
-        y = x->parent;
+    if ( x->right !=  nullptr ){
+        Node *z = minimum(x->right);
+        return z->item.get_key();
     }
-    return y;
+    else{
+        Node *y = x->parent;
+        while ( y != nullptr && x == y->right){
+            x = y;
+            y = x->parent;
+    }
+    if(y==nullptr)
+        return T();
+    return y->item.get_key();
+    }
 }
 
 //=========================================================================
@@ -307,18 +313,18 @@ T BST<D,T>::successor(const T k)
 //  the node that has the next largest key after k in the tree
 //=========================================================================
 template <class D, class T>
-T BST<D,T>::minimum(Node *x)
+typename BST<D,T>::Node* BST<D,T>::minimum(Node *x)
 //preconditions: the tree object exists and contains the key k
 //postconditions: the correct successor of the node with key k is returned 
 {
-    Node *y = x.parent;
+    Node *y = x->parent;
     while (x != NULL){
         y = x;
         x = x->left;
     }
-    return y->item.get_key();
+    return y;
 }
-/*
+
 //=========================================================================
 // findNode 
 // Parameters: 
@@ -327,19 +333,18 @@ T BST<D,T>::minimum(Node *x)
 //  
 //=========================================================================
 template <class D, class T>
-Node* BST<D,T>::findNode(Node* x, T key)
+typename BST<D,T>::Node* BST<D,T>::findNode(Node* root, T key)
 //preconditions: the tree object exists and contains the key k
 //postconditions: 
 {
-    while (x != nullptr && x->item.get_key() != key) {
-        if (k < x->item.get_key())
-            x = x->left;
+    while (root != nullptr && root->item.get_key() != key) {
+        if (key < root->item.get_key())
+            root = root->left;
         else
-            x = x->right;
+            root = root->right;
     }
-    return x;
+    return root;
 }
-*/
 
 //=========================================================================
 // remove 
@@ -353,36 +358,90 @@ void BST<D,T>::remove(const T k)
 //preconditions: the tree object exists and contains the key k
 //postconditions: 
 {
-   Node *x = findNode(this, k);
+   Node *x = findNode(this->root, k);
 
     //x has no left child, replace x with x.right
    if(x->left == nullptr){
-    if(x->parent->left == x)
-        x->parent->left = x->right;
-    if(x->parent->right == x)
-        x->parent->right = x->right;
-    x->right->parent = x->parent;
+    transplant(this, x, x->right);
     delete x;
    }
 
    //x has no right child, replace x with x.left
    else if(x->right == nullptr){
-    if(x->parent->left == x)
-        x->parent->left = x->left;
-    if(x->parent->right == x)
-        x->parent->right = x->left;
-    x->left->parent = x->parent;
+    transplant(this, x, x->left);
     delete x;
    }
 
-   //z has both children
-   else T y = successor(x->item.get_key()){
-    if(x->right->item.get_key() == y){
-        //replace z with y
+   //x has both children
+   else {
+    Node* y = minimum(x->right);
+    if(y != x->right){
+        transplant(this, y, y->right);
+        y->right = x->right;
+        y->right->parent = y;
     }
-    else{
-        //replace y with y.right 
-        //replace x with y
+    transplant(this, x, y);
+    if(y->left != nullptr){
+        y->left = x->left;
+        y->left->parent = y;
+        delete x;
     }
    }
+}
+
+//=========================================================================
+// transplant 
+// Parameters: 
+//  x - root node of a BST 
+// Return:	
+//  
+//=========================================================================
+template <class D, class T>
+void BST<D,T>::transplant(BST* tree, Node* u, Node* v)
+//preconditions: 
+//postconditions: 
+{
+    if(u->parent == nullptr)
+        tree->root = v;
+    else if (u == u->parent->left)
+        u->parent->left = v;
+    else (u->parent->right = v);
+    if (v != nullptr)
+        v->parent = u->parent;
+}
+
+//=========================================================================
+// trim 
+// Parameters: 
+//  
+// Return:	
+//  
+//=========================================================================
+template <class D, class T>
+void BST<D,T>::trim(T high, T low)
+//preconditions: 
+//postconditions: 
+{
+    trim_recursive(this->root, high, low);
+}
+
+//=========================================================================
+// trim_recursive
+// Parameters: 
+//  
+// Return:	
+//  
+//=========================================================================
+template <class D, class T>
+void BST<D,T>::trim_recursive(Node* root, T high, T low)
+//preconditions: 
+//postconditions: 
+{
+    if(root == nullptr)
+        return;
+    trim_recursive(root->left, high, low);
+    trim_recurisve(root->right, high, low);
+
+    if(root->item.get_key() < low || root->item.get_key() > high)
+        remove(root->item.get_key());
 }
