@@ -205,6 +205,8 @@ T BST<D,T>::max_key()
 //postconditions: the largest key in the tree is returned
 {
     Node *x = this->root;
+    if(x  == nullptr)
+        return T();
     Node *max = this->root;
     while (x != NULL){
         max = x;
@@ -225,6 +227,8 @@ D BST<D,T>::max_data()
 //postconditions: the data value associated with the largest key in the tree is correctly returned
 {
     Node *x = this->root;
+    if(x  == nullptr)
+        return D();
     Node *max = this->root;
     while (x != NULL){
         max = x;
@@ -245,6 +249,8 @@ T BST<D,T>::min_key()
 //postconditions: the key associated with the minimum key in the tree is correctly returned
 {
    Node *x = this->root;
+   if(x  == nullptr)
+        return T();
     Node *min = this->root;
     while (x != NULL){
         min = x;
@@ -265,6 +271,8 @@ D BST<D,T>::min_data()
 //postconditions: the data value associated with the minimum key in the tree is correctly returned
 {
     Node *x = this->root;
+    if(x  == nullptr)
+        return D();
     Node *min = this->root;
     while (x != NULL){
         min = x;

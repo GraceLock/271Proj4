@@ -232,9 +232,18 @@ void test_max_data() {
         if(max_str != "10 data") {
             cout << "Incorrect result of max_data. Expected \"10 data\" but got : " << max_str << endl;
         }
-    } catch(exception& e) {
-        cerr << "Error in determining data of max node in bst : " << e.what() << endl;
-    }
+        BST<string, int> empty_bst;
+        if (empty_bst.max_data() != "") {
+            cout << "Incorrect result of max_data. Expected \"\" (empty string) but got : " << empty_bst.max_data() << endl;
+        }
+        BST<string, int> single_node_bst;
+        single_node_bst.insert("Data for key 5", 5);
+        if (single_node_bst.max_data() != "Data for key 5") {
+            cout << "Incorrect result of max_data. Expected \"Data for key 5\" but got : " << single_node_bst.max_data() << endl;
+        }
+        } catch(exception& e) {
+            cerr << "Error in determining data of max node in bst : " << e.what() << endl;
+        }
 }
 
 void test_max_key() {
