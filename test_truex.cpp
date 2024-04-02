@@ -125,6 +125,39 @@ void test_get() {
         if(val != "one") {
             cout << "Incorrect get result. Expected \"one\" but got : " << val << endl;
         } 
+        bst.insert("hi", 89);
+        bst.insert("apple", 100);
+        bst.insert("girl", 2);
+        bst.insert("cs", -12);
+        val = bst.get(-12);
+        if(val != "cs") {
+            cout << "Incorrect get result. Expected \"cs\" but got : " << val << endl;
+        } 
+        val = bst.get(2);
+        if(val != "girl") {
+            cout << "Incorrect get result. Expected \"girl\" but got : " << val << endl;
+        } 
+        val = bst.get(100);
+        if(val != "apple") {
+            cout << "Incorrect get result. Expected \"apple\" but got : " << val << endl;
+        } 
+        bst.insert("world", 100);
+        val = bst.get(100);
+        if(val != "apple") {
+            cout << "Incorrect get result. Expected \"apple\" but got : " << val << endl;
+        } 
+        BST<float, float> bst1;
+        float val1 = bst1.get(2.9);
+        if(val1 != 0.0 ) {
+            cout << "Incorrect get result. Expected \"0.0\" but got : " << val1 << endl;
+        } 
+        bst1.insert(9.9, 9.9);
+        bst1.insert(100.100, 3.14);
+        bst1.insert(-12.2, 12);
+        val1 = bst1.get(12);
+        if(val1 != -12.2) {
+            cout << "Incorrect get result. Expected -12.2 but got : " << val1 << endl;
+        } 
     } catch(exception& e) {
         cerr << "Error in getting data from bst : " << e.what() << endl;
     }
@@ -141,6 +174,47 @@ void test_remove() {
         string bst_str = balanced_bst.to_string();
         if(bst_str != "5 2 8 1 3 6 9 4 10") {
             cout << "Incorrect result of removing 7. Expected 5 2 8 1 3 6 9 4 10 but got : " << bst_str << endl;
+        }
+        
+        BST<int, int> bst1;
+        bst1.remove(1);
+        string bst_str1 = bst1.to_string();
+        if(bst_str1 != "") {
+            cout << "Incorrect result of removing 1. Expected empty tree but got : " << bst_str1 << endl;
+        }
+        bst1.insert(5, 6);
+        bst1.remove(6);
+        bst_str1 = bst1.to_string();
+        if(bst_str1 != "") {
+            cout << "Incorrect result of removing 6. Expected empty tree but got : " << bst_str1 << endl;
+        }
+        bst1.insert(9, 10);
+        bst1.insert(10, 2);
+        bst1.remove(2);
+        bst_str1 = bst1.to_string();
+        if(bst_str1 != "10") {
+            cout << "Incorrect result of removing 2. Expected 10 but got : " << bst_str1 << endl;
+        }
+        bst1.insert(11, 23);
+        bst1.insert(22, 100);
+        bst1.remove(10);
+        bst_str1 = bst1.to_string();
+        if(bst_str1 != "23 100") {
+            cout << "Incorrect result of removing 10. Expected 23 100 but got : " << bst_str1 << endl;
+        }
+        bst1.insert(11, 2);
+        bst1.insert(22, 1);
+        bst1.insert(11, 5);
+        bst1.insert(22, 103);
+        bst1.remove(2);
+        bst_str1 = bst1.to_string();
+        if(bst_str1 != "23 5 100 1 103") {
+            cout << "Incorrect result of removing 2. Expected 23 5 100 1 103 but got : " << bst_str1 << endl;
+        }
+        bst1.remove(23);
+        bst_str1 = bst1.to_string();
+        if(bst_str1 != "100 5 103 1") {
+            cout << "Incorrect result of removing 2. Expected 100 5 103 1 but got : " << bst_str1 << endl;
         }
     } catch(exception& e) {
         cerr << "Error in removing node from bst : " << e.what() << endl;

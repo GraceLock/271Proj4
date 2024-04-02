@@ -383,7 +383,6 @@ void BST<D,T>::remove(const T k)
    if (x == nullptr){
     return;
    }
-
     //x has no left child, replace x with x.right
    if(x->left == nullptr){
     transplant(this, x, x->right);
