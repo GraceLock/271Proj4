@@ -97,23 +97,45 @@ string BST<D,T>::to_string() const
 }
 /*
 //=========================================================================
-// inOrder 
+// in_order 
 // Parameters: none
 // Return:	
 //=========================================================================
 template <class D, class T>
-string BST<D,T>::inOrder(Node* r, string s) const
+string BST<D,T>::in_order() const
 //preconditions: 
 //postconditions:   
 {
-    Node *x = root;
-    if (x == nullptr)
-        return "";
-
-    inOrder(x->left, s);
-    s = s + std::to_string(x->item.get_key()) + " ";
-    inOrder(x->right, s);
+    Node *x = this->root;
+    string out =  in_order_recursive(x, "");
+    if (!out.empty() && out.back() == ' ') {
+        out.pop_back();
+    }
+    return out;
 }
+
+//=========================================================================
+// in_order_recursive 
+// Parameters: 
+//  elem - element to insert into the tree
+// Return:	none
+//=========================================================================
+template <class D, class T>
+string BST<D,T>::in_order_recursive(Node *x, string out) const
+//preconditions: 
+//postconditions: 
+{
+    if (x == nullptr) {
+        return out;
+    }
+
+    string l = in_order_recursive(x->left, out);
+    string root = std::to_string(x->item.get_key()) + " ";
+    string r = in_order_recursive(x->right, out);
+
+    return l + root + r;
+}
+
 */
 //=========================================================================
 // insert 
