@@ -18,11 +18,35 @@ void test_empty() {
     {
         BST<string, int> bst;
         if(!bst.empty()) {
-            cout << "Incorrect empty result." << endl;
+            cout << "Incorrect empty result0." << endl;
         }
         bst.insert("one",1);
         if(bst.empty()) {
-            cout << "Incorrect empty result." << endl;
+            cout << "Incorrect empty result1." << endl;
+        }
+        bst.remove(1);
+        if(!bst.empty()) {
+            cout << "Incorrect empty result2." << endl;
+        }
+        BST<string, string> bst1;
+        if(!bst1.empty()) {
+            cout << "Incorrect empty result3." << endl;
+        }
+        bst1.insert("one", "one");
+        if(bst1.empty()) {
+            cout << "Incorrect empty result4." << endl;
+        }
+        bst1.insert("hi", "hello");
+        if(bst1.empty()) {
+            cout << "Incorrect empty result5." << endl;
+        }
+        bst1.remove("hello");
+        if(bst1.empty()) {
+            cout << "Incorrect empty result6." << endl;
+        }
+        bst1.remove("one");
+        if(!bst1.empty()) {
+            cout << "Incorrect empty result7." << endl;
         }
     }
     catch(exception& e)
