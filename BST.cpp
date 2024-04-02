@@ -471,6 +471,9 @@ void BST<D,T>::trim_recursive(Node* root, T low, T high)
     trim_recursive(root->left, low, high);
     trim_recurisve(root->right, low, high);
 
-    if(root->item.get_key() < low || root->item.get_key() > high)
+    if(root->item.get_key() < low){
         remove(root->item.get_key());
+    }else if (root->item.get_key() > high){
+        remove(root->item.get_key());
+    }
 }
