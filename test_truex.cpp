@@ -55,6 +55,20 @@ void test_insert() {
         if(bst_str != "5 2 7 1 3 6 9 4 8 10") {
             cout << "Incorrect result of inserting keys {5, 2, 7, 1, 3, 4, 6, 9, 8, 10}. Expected 5 2 7 1 3 6 9 4 8 10 but got : " << bst_str << endl;
         }
+        BST<int, int> bst1;
+        string bst_str1 = bst1.to_string();
+        if(bst_str1 != "") {
+            cout << "Incorrect result of to_string. Expected empty string but got : " << bst_str << endl;
+        }
+        bst1.insert(4, 5);
+        bst1.insert(4, 5);
+        bst1.insert(5, 6);
+        bst1.insert(7, 8);
+        string bst_str2 = bst1.to_string();
+        if(bst_str2 != "5 5 6 8") {
+            cout << "Incorrect result of to_string. Expected empty string but got : " << bst_str << endl;
+        }
+        
     } catch(exception& e) {
         cerr << "Error inserting into bst : " << e.what() << endl;
     }

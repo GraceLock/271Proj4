@@ -403,10 +403,8 @@ void BST<D,T>::remove(const T k)
         y->right->parent = y;
     }
     transplant(this, x, y);
-    if(y->left != nullptr){
-        y->left = x->left;
-        y->left->parent = y;
-    }
+    y->left = x->left;
+    y->left->parent = y;
    }
    delete x;
 }
