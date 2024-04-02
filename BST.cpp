@@ -107,11 +107,12 @@ string BST<D,T>::in_order()
 //postconditions:   
 {
     Node *x = this->root;
-    string out =  in_order_recursive(x, "");
-    if (!out.empty() && out.back() == ' ') {
-        out.pop_back();
-    }
-    return out;
+    std::ostringstream oss;
+    in_order_recursive(x, oss);
+    //if (!out.empty() && out.back() == ' ') {
+    //    out.pop_back();
+    //}
+    return oss.str();
 }
 
 //=========================================================================
@@ -121,19 +122,17 @@ string BST<D,T>::in_order()
 // Return:	none
 //=========================================================================
 template <class D, class T>
-string BST<D,T>::in_order_recursive(Node *x, string out) const
+void BST<D,T>::in_order_recursive(Node *x, std::ostringstream& oss) const
 //preconditions: 
 //postconditions: 
 {
     if (x == nullptr) {
-        return out;
+        return;
     }
 
-    string l = in_order_recursive(x->left, out);
-    string root = std::to_string(x->item.get_key()) + " ";
-    string r = in_order_recursive(x->right, out);
-
-    return l + root + r;
+    in_order_recursive(x->left, oss);
+    oss << x->item.get_key() << + " ";
+    in_order_recursive(x->right, oss);
 }
 
 
@@ -318,6 +317,9 @@ T BST<D,T>::successor(const T k)
 //postconditions: the correct successor of the node with key k is returned 
 {
     Node *x = findNode(this->root, k);
+
+    if(x == nullptr)
+        return T();
     
     if ( x->right !=  nullptr ){
         Node *z = minimum(x->right);

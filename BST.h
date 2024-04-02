@@ -30,7 +30,7 @@ public:
     void remove(const T k );
     string to_string( void ) const; 
     string in_order();
-    string in_order_recursive(Node *x, string out) const;
+    void in_order_recursive(Node *x, std::ostringstream& oss) const;
     bool empty( void );
     Node* minimum(Node *x);
     D get( const T k );
