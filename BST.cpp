@@ -109,10 +109,11 @@ string BST<D,T>::in_order()
     Node *x = this->root;
     std::ostringstream oss;
     in_order_recursive(x, oss);
-    //if (!out.empty() && out.back() == ' ') {
-    //    out.pop_back();
-    //}
-    return oss.str();
+    string out = oss.str();
+    if (!(out == "") && out.back() == ' ') {
+        out.pop_back();
+    }
+    return out;
 }
 
 //=========================================================================
