@@ -213,9 +213,9 @@ bool BST<D, K>::empty(void) // check if the tree is empty
 // Max key
 
 // Parameters: none
-// Return:
-// Preconditions:
-// Postconditions:
+// Return: The largest key in the tree
+// Preconditions: None
+// Postconditions: The largest key in the tree is returned
 //=========================================================================
 template <class D, class K>
 K BST<D, K>::max_key()
@@ -233,286 +233,279 @@ K BST<D, K>::max_key()
 }
 
 //=========================================================================
-// max_data 
-// Parameters: none
+// Max data
+
+// Parameters: None
 // Return:
-//  the data value associated with the largest key in the tree
+// Preconditions: None
+// Postconditions: The largest data value in the tree is returned
 //=========================================================================
 template <class D, class K>
 D BST<D, K>::max_data()
-// preconditions: the tree object exists and is not empty
-// postconditions: the data value associated with the largest key in the tree is correctly returned
 {
-    Node *x = this->root;
-    if (x == nullptr)
-        return D();
-    Node *max = this->root;
+    Node *x = this->root;   // start from the node root
+    if (x == nullptr)       // if the tree is empty
+        return D();         // return default value
+    Node *max = this->root; // Initialize max node
     while (x != NULL)
     {
-        max = x;
-        x = x->right;
+        max = x;      // update max node
+        x = x->right; // move to the right subtree
     }
-    return max->item.get_data();
+    return max->item.get_data(); // return the maximum data
 }
 
 //=========================================================================
-// min_key
-// Parameters: none
-// Return:
-//  the key associated with the minimum key in the tree
+// Min key
+
+// Parameters: None
+// Return: The smallest key in the tree
+// Preconditions: None
+// Postconditions: The smallest key in the tree is returned
 //=========================================================================
 template <class D, class K>
 K BST<D, K>::min_key()
-// preconditions: the tree object exists and is not empty
-// postconditions: the key associated with the minimum key in the tree is correctly returned
 {
-    Node *x = this->root;
-    if (x == nullptr)
-        return K();
-    Node *min = this->root;
+    Node *x = this->root;   // start from the node root
+    if (x == nullptr)       // if the tree is empty
+        return K();         // return default value
+    Node *min = this->root; // Initialize min node
     while (x != NULL)
     {
-        min = x;
-        x = x->left;
+        min = x;     // update min node
+        x = x->left; // move to the left subtree
     }
-    return min->item.get_key();
+    return min->item.get_key(); // return the minimum key
 }
 
 //=========================================================================
-// min_data
-// Parameters: none
-// Return:
-//  the data value associated with the minimum key in the tree
+// Min data
+
+// Parameters: None
+// Return: The smallest data value in the tree
+// Preconditions: None
+// Postconditions: The smallest data value in the tree is returned
 //=========================================================================
 template <class D, class K>
 D BST<D, K>::min_data()
-// preconditions: the tree object exists and is not empty
-// postconditions: the data value associated with the minimum key in the tree is correctly returned
 {
-    Node *x = this->root;
-    if (x == nullptr)
-        return D();
-    Node *min = this->root;
+    Node *x = this->root;   // start from the node root
+    if (x == nullptr)       // if the tree is empty
+        return D();         // return default value
+    Node *min = this->root; // Initialize min node
     while (x != NULL)
     {
-        min = x;
-        x = x->left;
+        min = x;     // update min node
+        x = x->left; // move to the left subtree
     }
-    return min->item.get_data();
+    return min->item.get_data(); // return the minimum data
 }
 
 //=========================================================================
-// get
-// Parameters:
-//  k - key of a node to find its data
-// Return:
-//  the data associated with the key k
+// Get
+
+// Parameters: The key of the node to get
+// Return: The data of the node with the key
+// preconditions:The tree object exists and contains the key k
+// postconditions:The data of the node with key k is returned
 //=========================================================================
 template <class D, class K>
 D BST<D, K>::get(const K k)
-// preconditions: the tree object exists and contains the key k
-// postconditions: the data associated with the key k is correctly returned and NULL if k is not in the tree
 {
-    Node *x = this->root;
+    Node *x = this->root; // start from the root
     while (x != nullptr)
     {
-        if (x->item.get_key() == k)
-            return x->item.get_data();
-        else if (k < x->item.get_key())
-            x = x->left;
+        if (x->item.get_key() == k)     // if the key is found
+            return x->item.get_data();  // return the data
+        else if (k < x->item.get_key()) // if the key is less than the current node
+            x = x->left;                // move to the left child
         else
-            x = x->right;
+            x = x->right; // move to the right child
     }
-    return D();
+    return D(); // return default value
 }
 
 //=========================================================================
-// successor
-// Parameters:
-//  k - the key of the node to find successor for
-// Return:
-//  the node that has the next largest key after k in the tree
+// Successor
+
+// Parameters: The key of the node to find successor for
+// Return: The key of the node that has the next largest key after k in the tree
+// Preconditions: The tree object exists and contains the key k
+// Postconditions: The correct successor of the node with key k is returned
 //=========================================================================
 template <class D, class K>
 K BST<D, K>::successor(const K k)
-// preconditions: the tree object exists and contains the key k
-// postconditions: the correct successor of the node with key k is returned
 {
-    Node *x = findNode(this->root, k);
+    Node *x = findNode(this->root, k); // find the node with the key
 
     if (x == nullptr)
-        return K();
+        return K(); // return default value
 
     if (x->right != nullptr)
     {
-        Node *z = minimum(x->right);
-        return z->item.get_key();
+        Node *z = minimum(x->right); // find the minimum of the right subtree
+        return z->item.get_key();    // return the key
     }
     else
     {
-        Node *y = x->parent;
+        Node *y = x->parent; // set y to the parent of x
         while (y != nullptr && x == y->right)
         {
-            x = y;
-            y = x->parent;
+            x = y;         // set x to y
+            y = x->parent; // set y to the parent of x
         }
-        if (y == nullptr)
+        if (y == nullptr) // if y is null
             return K();
-        return y->item.get_key();
+        return y->item.get_key(); // return the key
     }
 }
 
 //=========================================================================
-// minimum
-// Parameters:
-//  k - the key of the node to find successor for
-// Return:
-//  the node that has the next largest key after k in the tree
+// Minimum
+
+// Parameters: The root node of a BST
+// Return: The node with the smallest key in the tree
+// Preconditions: The tree object exists
+// Postconditions: The node with the smallest key is returned
 //=========================================================================
 template <class D, class K>
 typename BST<D, K>::Node *BST<D, K>::minimum(Node *x)
-// preconditions: the tree object exists and contains the key k
-// postconditions: the correct successor of the node with key k is returned
+
 {
     while (x->left != NULL)
     {
-        x = x->left;
+        x = x->left; // move to the left subtree
     }
-    return x;
+    return x; // return the minimum node
 }
 
 //=========================================================================
-// findNode
-// Parameters:
-//  x - root node of a BST
-// Return:
-//
+// Find Node
+
+// Parameters: The root node of a BST and a key
+// Return: The node with the key
+// Preconditions: The tree object exists
+// Postconditions:The node with the key is returned
 //=========================================================================
 template <class D, class K>
 typename BST<D, K>::Node *BST<D, K>::findNode(Node *root, K key)
-// preconditions: the tree object exists and contains the key k
-// postconditions:
+
 {
-    while (root != nullptr && root->item.get_key() != key)
+    while (root != nullptr && root->item.get_key() != key) // while the root is not null and the key is not found
     {
-        if (key < root->item.get_key())
-            root = root->left;
+        if (key < root->item.get_key()) // if the key is less than the current node
+            root = root->left;          // move to the left child
         else
-            root = root->right;
+            root = root->right; // move to the right child
     }
-    return root;
+    return root; // return the node
 }
 
 //=========================================================================
-// remove
-// Parameters:
-//
-// Return:
-//
+// Remove
+
+// Parameters: The key of the node to remove
+// Return: None
+// Preconditions: The tree object exists and contains the key k
+// Postconditions: The node with key k is removed from the tree
 //=========================================================================
 template <class D, class K>
 void BST<D, K>::remove(const K k)
-// preconditions: the tree object exists and contains the key k
-// postconditions:
+
 {
-    Node *x = findNode(this->root, k);
+    Node *x = findNode(this->root, k); // find the node with the key
 
     if (x == nullptr)
     {
-        return;
+        return; // return if the node is not found
     }
-    // x has no left child, replace x with x.right
+
     if (x->left == nullptr)
     {
-        transplant(this, x, x->right);
+        transplant(this, x, x->right); // transplant the right child
     }
 
-    // x has no right child, replace x with x.left
     else if (x->right == nullptr)
     {
-        transplant(this, x, x->left);
+        transplant(this, x, x->left); // transplant the left child
     }
 
-    // x has both children
     else
     {
-        Node *y = minimum(x->right);
+        Node *y = minimum(x->right); // find the minimum of the right subtree
         if (y->parent != x)
         {
-            transplant(this, y, y->right);
-            y->right = x->right;
-            y->right->parent = y;
+            transplant(this, y, y->right); // transplant the right child
+            y->right = x->right;           // set the right child of y to the right child of x
+            y->right->parent = y;          // set the parent of the right child of y to y
         }
-        transplant(this, x, y);
-        y->left = x->left;
-        y->left->parent = y;
+        transplant(this, x, y); // transplant the node
+        y->left = x->left;      // set the left child of y to the left child of x
+        y->left->parent = y;    // set the parent of the left child of y to y
     }
-    delete x;
+    delete x; // delete the node
 }
 
 //=========================================================================
-// transplant
-// Parameters:
-//  x - root node of a BST
-// Return:
-//
+// Transplant
+
+// Parameters: The tree, and two nodes
+// Return: None
+// Preconditions: The tree object exists
+// Postconditions: The two nodes are swapped
 //=========================================================================
 template <class D, class K>
 void BST<D, K>::transplant(BST *tree, Node *u, Node *v)
-// preconditions:
-// postconditions:
 {
-    if (u->parent == nullptr)
-        tree->root = v;
-    else if (u == u->parent->left)
-        u->parent->left = v;
+    if (u->parent == nullptr)      // if the parent is null
+        tree->root = v;            // set the root to v
+    else if (u == u->parent->left) // if u is the left child
+        u->parent->left = v;       // set the left child to v
     else
     {
-        u->parent->right = v;
+        u->parent->right = v; // set the right child to v
     }
-    if (v != nullptr)
-        v->parent = u->parent;
+    if (v != nullptr)          // if v is not null
+        v->parent = u->parent; // set the parent of v to the parent of u
 }
 
 //=========================================================================
-// trim
-// Parameters:
-//
-// Return:
-//
+// Trim
+
+// Parameters: The low and high keys
+// Return: None
+// Preconditions: The tree object exists
+// Postconditions: The tree is trimmed to only contain keys between low and high
 //=========================================================================
 template <class D, class K>
 void BST<D, K>::trim(K low, K high)
-// preconditions:
-// postconditions:
 {
-    trim_recursive(this->root, low, high);
+    trim_recursive(this->root, low, high); // call the recursive trim function
 }
 
 //=========================================================================
-// trim_recursive
-// Parameters:
-//
-// Return:
-//
+// Trim recursive
+
+// Parameters: The root node of the tree and the low and high keys
+// Return: None
+// Preconditions: The tree object exists
+// Postconditions: The tree is trimmed to only contain keys between low and high
 //=========================================================================
 template <class D, class K>
 void BST<D, K>::trim_recursive(Node *root, K low, K high)
-// preconditions:
-// postconditions:
 {
-    if (root == nullptr)
+    if (root == nullptr) // if the root is null
         return;
 
-    trim_recursive(root->left, low, high);
-    trim_recursive(root->right, low, high);
+    trim_recursive(root->left, low, high);  // call the function on the left child
+    trim_recursive(root->right, low, high); // call the function on the right child
 
-    if (root->item.get_key() < low)
+    if (root->item.get_key() < low) // if the key is less than the low
     {
-        remove(root->item.get_key());
+        remove(root->item.get_key()); // remove the node
     }
-    else if (root->item.get_key() > high)
+    else if (root->item.get_key() > high) // if the key is greater than the high
     {
-        remove(root->item.get_key());
+        remove(root->item.get_key()); // remove the node
     }
 }
