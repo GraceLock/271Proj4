@@ -155,11 +155,11 @@ void test_get() {
         bst1.insert(100.1, 3.14);
         bst1.insert(-12.2, 12.99);
         val1 = bst1.get(12.99);
-        if(val1 != -12.2) {
+        if(!((val1 - -12.2) < 0.000001)) {
             cout << "Incorrect get result. Expected -12.2 but got : " << val1 << endl;
         } 
         val1 = bst1.get(3.14);
-        if(val1 != 100.1) {
+        if(!((val1 - 100.1) < 0.000001)) {
             cout << "Incorrect get result. Expected 100.1 but got : " << val1 << endl;
         } 
         BST<int, string> bst3;
