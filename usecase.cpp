@@ -21,7 +21,12 @@ string convert(BST<string, string> *bst, string binaryString)
         string chunk = binaryString.substr(i, 4);
         hex += bst->get(chunk);
     }
-    return hex;
+    for (char c : hex) {
+        if (c != '0') {
+            return hex;
+        }
+    }
+    return "0";
 }
 
 template <class D, class K>
