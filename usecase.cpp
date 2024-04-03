@@ -7,12 +7,25 @@
 
 using namespace std;
 
-#ifndef USECASE_H
-#define USECASE_H
-
 template <class D, class K>
 string convert(BST<string, string> &bst, string binaryString);
 BST<D, K>* create_bst(string fname);
+
+
+int main() {
+    
+    BST<string, string> bst = create_bst("binhex.txt");
+
+    cout << "Enter a binary string: ";
+    string binaryInput;
+    cin >> binaryInput;
+
+    string hexOutput = convert(bst, binaryInput);
+    cout << "Hexadecimal conversion: " << hexOutput << endl;
+
+    delete bst;
+    return 0;
+}
 
 template <class D, class K>
 string convert(BST<string, string> &bst, string binaryString)
@@ -50,21 +63,4 @@ BST<D, K>* create_bst(string fname){
     }
     file.close();
     return bst;
-}
-
-#endif
-
-int main() {
-    
-    BST<string, string> bst = create_bst("binhex.txt");
-
-    cout << "Enter a binary string: ";
-    string binaryInput;
-    cin >> binaryInput;
-
-    string hexOutput = convert(bst, binaryInput);
-    cout << "Hexadecimal conversion: " << hexOutput << endl;
-
-    delete bst;
-    return 0;
 }
