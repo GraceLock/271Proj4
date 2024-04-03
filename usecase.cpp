@@ -67,5 +67,5 @@ int main() {
 }
 
 
-// g++ element.cpp BST.cpp usecase.cpp -o usecase
+// g++ -std=c++11 element.cpp BST.cpp usecase.cpp -o usecase
 // ./usecase
