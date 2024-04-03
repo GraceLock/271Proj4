@@ -152,11 +152,25 @@ void test_get() {
             cout << "Incorrect get result. Expected \"0.0\" but got : " << val1 << endl;
         } 
         bst1.insert(9.9, 9.9);
-        bst1.insert(100.100, 3.14);
-        bst1.insert(-12.2, 12);
-        val1 = bst1.get(12);
+        bst1.insert(100.1, 3.14);
+        bst1.insert(-12.2, 12.99);
+        val1 = bst1.get(12.99);
         if(val1 != -12.2) {
             cout << "Incorrect get result. Expected -12.2 but got : " << val1 << endl;
+        } 
+        val1 = bst1.get(3.14);
+        if(val1 != 100.1) {
+            cout << "Incorrect get result. Expected 100.1 but got : " << val1 << endl;
+        } 
+        BST<int, string> bst3;
+        bst3.insert(1, "delta");
+        bst3.insert(2, "alpha");
+        bst3.insert(3, "epsilon");
+        bst3.insert(4, "beta");
+        bst3.insert(5, "gamma");
+        int val2 = bst3.get("alpha");
+        if(val2 != 2) {
+            cout << "Incorrect get result. Expected 2 but got : " << val1 << endl;
         } 
     } catch(exception& e) {
         cerr << "Error in getting data from bst : " << e.what() << endl;
@@ -240,6 +254,15 @@ void test_max_data() {
         single_node_bst.insert("Data for key 5", 5);
         if (single_node_bst.max_data() != "Data for key 5") {
             cout << "Incorrect result of max_data. Expected \"Data for key 5\" but got : " << single_node_bst.max_data() << endl;
+        }
+        BST<int, string> bst3;
+        bst3.insert(1, "delta");
+        bst3.insert(2, "alpha");
+        bst3.insert(3, "epsilon");
+        bst3.insert(4, "beta");
+        bst3.insert(5, "gamma");
+        if (bst3.max_data() != 5) {
+            cout << "Incorrect result of max_data. Expected \"5\" but got : " << bst3.max_data() << endl;
         }
         } catch(exception& e) {
             cerr << "Error in determining data of max node in bst : " << e.what() << endl;
@@ -414,11 +437,21 @@ void test_in_order() {
         if(bst_str != "1 2 3 4 5 6 7 8 9 10") {
             cout << "Incorrect in_order result after inserting keys {5, 2, 7, 1, 3, 4, 6, 9, 8, 10}. Expected 1 2 3 4 5 6 7 8 9 10 but got : " << bst_str << endl;
         }
+        BST<int, string> bst3;
+        bst3.insert(1, "delta");
+        bst3.insert(2, "alpha");
+        bst3.insert(3, "epsilon");
+        bst3.insert(4, "beta");
+        bst3.insert(5, "gamma");
+        bst_str = bst3.in_order();
+        if(bst_str != "alpha beta delta epsilon gamma") {
+            cout << "Incorrect in_order result after inserting keys. Expected alpha beta delta epsilon gamma : " << bst_str << endl;
+        }
     } catch(exception& e) {
         cerr << "Error getting keys in_order from bst : " << e.what() << endl;
     }
 }
-/*
+
 void test_trim() {
     try {
         BST<string,int> bst;
@@ -445,7 +478,7 @@ void test_trim() {
         cerr << "Error in trimming the bst : " << e.what() << endl;
     }
 }
-
+/*
 void test_binhex(){
     try {
         BST<string,string>* bst1 = create_bst<string,string>("binhex.txt");
@@ -493,7 +526,7 @@ int main() {
     test_min_key();
     test_successor();
     test_in_order();
-    //test_trim();
+    test_trim();
     //test_binhex();
 
     cout << "Testing completed" << endl;
