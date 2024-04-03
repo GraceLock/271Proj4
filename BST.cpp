@@ -10,8 +10,8 @@ using namespace std;
 // Parameters: none
 // Return:	none
 //=========================================================================
-template <class D, class T>
-BST<D,T>::BST()
+template <class D, class K>
+BST<D,K>::BST()
 //preconditions: none
 //postconditions: BST object is created 
 {
@@ -23,8 +23,8 @@ BST<D,T>::BST()
 // Parameters: none
 // Return:	none
 //=========================================================================
-template <class D, class T>
-BST<D,T>::~BST()
+template <class D, class K>
+BST<D,K>::~BST()
 //preconditions: BST object exists
 //postconditions: BST object is deleted  
 {
@@ -42,8 +42,8 @@ BST<D,T>::~BST()
 // Parameters: none
 // Return:	none
 //=========================================================================
-template <class D, class T>
-void BST<D,T>::deleteTree(Node* node)
+template <class D, class K>
+void BST<D,K>::deleteTree(Node* node)
 //preconditions: BST object exists
 //postconditions: BST object is deleted  
 {
@@ -60,8 +60,8 @@ void BST<D,T>::deleteTree(Node* node)
 // Parameters: none
 // Return:	
 //=========================================================================
-template <class D, class T>
-string BST<D,T>::to_string() const
+template <class D, class K>
+string BST<D,K>::to_string() const
 //preconditions: 
 //postconditions:   
 {
@@ -101,8 +101,8 @@ string BST<D,T>::to_string() const
 // Parameters: none
 // Return:	
 //=========================================================================
-template <class D, class T>
-string BST<D,T>::in_order() 
+template <class D, class K>
+string BST<D,K>::in_order() 
 //preconditions: 
 //postconditions:   
 {
@@ -122,8 +122,8 @@ string BST<D,T>::in_order()
 //  elem - element to insert into the tree
 // Return:	none
 //=========================================================================
-template <class D, class T>
-void BST<D,T>::in_order_recursive(Node *x, std::ostringstream& oss) const
+template <class D, class K>
+void BST<D,K>::in_order_recursive(Node *x, std::ostringstream& oss) const
 //preconditions: 
 //postconditions: 
 {
@@ -143,12 +143,12 @@ void BST<D,T>::in_order_recursive(Node *x, std::ostringstream& oss) const
 //  elem - element to insert into the tree
 // Return:	none
 //=========================================================================
-template <class D, class T>
-void BST<D,T>::insert( const D data, const T key )
+template <class D, class K>
+void BST<D,K>::insert( const D data, const K key )
 //preconditions: triply linked list exists 
 //postconditions: triply linked list now includes the element to insert in the correct spot 
 {
-    Element<D, T> elem( data, key );
+    Element<D, K> elem( data, key );
 
     Node *newNode = new Node();
     newNode -> item = elem;
@@ -185,8 +185,8 @@ void BST<D,T>::insert( const D data, const T key )
 //  true - if the tree is empty
 //  false - if the tree has at least one node
 //=========================================================================
-template <class D, class T>
-bool  BST<D,T>::empty( void )
+template <class D, class K>
+bool  BST<D,K>::empty( void )
 //preconditions: the tree object exists
 //postconditions: the boolean value returned correctly describes the tree 
 {
@@ -199,14 +199,14 @@ bool  BST<D,T>::empty( void )
 // Return:	
 //  the key associated with the max key in the tree 
 //=========================================================================
-template <class D, class T>
-T BST<D,T>::max_key()
+template <class D, class K>
+K BST<D,K>::max_key()
 //preconditions: the tree object exists and is not empty
 //postconditions: the largest key in the tree is returned
 {
     Node *x = this->root;
     if(x  == nullptr)
-        return T();
+        return K();
     Node *max = this->root;
     while (x != NULL){
         max = x;
@@ -221,8 +221,8 @@ T BST<D,T>::max_key()
 // Return:
 //  the data value associated with the largest key in the tree
 //=========================================================================
-template <class D, class T>
-D BST<D,T>::max_data()
+template <class D, class K>
+D BST<D,K>::max_data()
 //preconditions: the tree object exists and is not empty
 //postconditions: the data value associated with the largest key in the tree is correctly returned
 {
@@ -243,14 +243,14 @@ D BST<D,T>::max_data()
 // Return:	
 //  the key associated with the minimum key in the tree 
 //=========================================================================
-template <class D, class T>
-T BST<D,T>::min_key()
+template <class D, class K>
+K BST<D,K>::min_key()
 //preconditions: the tree object exists and is not empty
 //postconditions: the key associated with the minimum key in the tree is correctly returned
 {
    Node *x = this->root;
    if(x  == nullptr)
-        return T();
+        return K();
     Node *min = this->root;
     while (x != NULL){
         min = x;
@@ -265,8 +265,8 @@ T BST<D,T>::min_key()
 // Return:	
 //  the data value associated with the minimum key in the tree 
 //=========================================================================
-template <class D, class T>
-D BST<D,T>::min_data()
+template <class D, class K>
+D BST<D,K>::min_data()
 //preconditions: the tree object exists and is not empty
 //postconditions: the data value associated with the minimum key in the tree is correctly returned
 {
@@ -288,8 +288,8 @@ D BST<D,T>::min_data()
 // Return:	
 //  the data associated with the key k
 //=========================================================================
-template <class D, class T>
-D BST<D,T>::get(const T k)
+template <class D, class K>
+D BST<D,K>::get(const K k)
 //preconditions: the tree object exists and contains the key k
 //postconditions: the data associated with the key k is correctly returned and NULL if k is not in the tree
 {
@@ -312,15 +312,15 @@ D BST<D,T>::get(const T k)
 // Return:	
 //  the node that has the next largest key after k in the tree
 //=========================================================================
-template <class D, class T>
-T BST<D,T>::successor(const T k)
+template <class D, class K>
+K BST<D,K>::successor(const K k)
 //preconditions: the tree object exists and contains the key k
 //postconditions: the correct successor of the node with key k is returned 
 {
     Node *x = findNode(this->root, k);
 
     if(x == nullptr)
-        return T();
+        return K();
     
     if ( x->right !=  nullptr ){
         Node *z = minimum(x->right);
@@ -333,7 +333,7 @@ T BST<D,T>::successor(const T k)
             y = x->parent;
     }
     if(y==nullptr)
-        return T();
+        return K();
     return y->item.get_key();
     }
 }
@@ -345,8 +345,8 @@ T BST<D,T>::successor(const T k)
 // Return:	
 //  the node that has the next largest key after k in the tree
 //=========================================================================
-template <class D, class T>
-typename BST<D,T>::Node* BST<D,T>::minimum(Node *x)
+template <class D, class K>
+typename BST<D,K>::Node* BST<D,K>::minimum(Node *x)
 //preconditions: the tree object exists and contains the key k
 //postconditions: the correct successor of the node with key k is returned 
 {
@@ -363,8 +363,8 @@ typename BST<D,T>::Node* BST<D,T>::minimum(Node *x)
 // Return:	
 //  
 //=========================================================================
-template <class D, class T>
-typename BST<D,T>::Node* BST<D,T>::findNode(Node* root, T key)
+template <class D, class K>
+typename BST<D,K>::Node* BST<D,K>::findNode(Node* root, K key)
 //preconditions: the tree object exists and contains the key k
 //postconditions: 
 {
@@ -384,8 +384,8 @@ typename BST<D,T>::Node* BST<D,T>::findNode(Node* root, T key)
 // Return:	
 //  
 //=========================================================================
-template <class D, class T>
-void BST<D,T>::remove(const T k)
+template <class D, class K>
+void BST<D,K>::remove(const K k)
 //preconditions: the tree object exists and contains the key k
 //postconditions: 
 {
@@ -426,8 +426,8 @@ void BST<D,T>::remove(const T k)
 // Return:	
 //  
 //=========================================================================
-template <class D, class T>
-void BST<D,T>::transplant(BST* tree, Node* u, Node* v)
+template <class D, class K>
+void BST<D,K>::transplant(BST* tree, Node* u, Node* v)
 //preconditions: 
 //postconditions: 
 {
@@ -449,8 +449,8 @@ void BST<D,T>::transplant(BST* tree, Node* u, Node* v)
 // Return:	
 //  
 //=========================================================================
-template <class D, class T>
-void BST<D,T>::trim(T low, T high)
+template <class D, class K>
+void BST<D,K>::trim(K low, K high)
 //preconditions: 
 //postconditions: 
 {
@@ -464,8 +464,8 @@ void BST<D,T>::trim(T low, T high)
 // Return:	
 //  
 //=========================================================================
-template <class D, class T>
-void BST<D,T>::trim_recursive(Node* root, T low, T high)
+template <class D, class K>
+void BST<D,K>::trim_recursive(Node* root, K low, K high)
 //preconditions: 
 //postconditions: 
 {

@@ -1,34 +1,20 @@
 #include "BST.cpp"
-#include <iostream> // For std::cout and std::cin
-#include <string>   // For std::string
+#include <iostream> 
+#include <string>   
+#include <fstream>
+#include <sstream>
+
 
 using namespace std;
 
-// Assuming BST<string, string> is correctly implemented with insert and get methods.
+#ifndef USECASE_H
+#define USECASE_H
 
-BST<string, string> create_bst()
-{
-    BST<string, string> bst;
-    // Directly insert binary-hex pairs into the BST
-    bst.insert("0000", "0");
-    bst.insert("0001", "1");
-    bst.insert("0010", "2");
-    bst.insert("0011", "3");
-    bst.insert("0100", "4");
-    bst.insert("0101", "5");
-    bst.insert("0110", "6");
-    bst.insert("0111", "7");
-    bst.insert("1000", "8");
-    bst.insert("1001", "9");
-    bst.insert("1010", "A");
-    bst.insert("1011", "B");
-    bst.insert("1100", "C");
-    bst.insert("1101", "D");
-    bst.insert("1110", "E");
-    bst.insert("1111", "F");
-    return bst;
-}
+template <class D, class K>
+string convert(BST<string, string> &bst, string binaryString);
+BST<D, K>* create_bst(string fname);
 
+template <class D, class K>
 string convert(BST<string, string> &bst, string binaryString)
 {
     string hexResult = "";
@@ -38,7 +24,7 @@ string convert(BST<string, string> &bst, string binaryString)
         binaryString = "0" + binaryString;
     }
     // Convert each 4-bit chunk to hexadecimal
-    for (size_t i = 0; i < binaryString.length(); i += 4)
+    for (int i = 0; i < binaryString.length(); i += 4)
     {
         string chunk = binaryString.substr(i, 4);
         hexResult += bst.get(chunk);
@@ -46,16 +32,32 @@ string convert(BST<string, string> &bst, string binaryString)
     return hexResult;
 }
 
+template <class D, class K>
+BST<D, K>* create_bst(string fname){
+    BST<string, string> *bst = new BST<string, string>();
+    fstream file;
+    
+    file.open(fname);
+    string line;
+    
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string hex, bin;
+        std::getline(iss, hex, ',');
+        std::getline(iss, bin, ',');
+
+        bst->insert(hex, bin);
+    }
+    file.close();
+    return bst;
+}
+
+#endif
+
 int main() {
-    BST<string, string> bst = create_bst();
+    
+    BST<string, string> bst = create_bst("binhex.txt");
 
-    // Debug: Test insertion and retrieval directly
-    cout << "Debug: Testing insertion and retrieval...\n";
-    cout << "Manual test for 0001: " << bst.get("0001") << " (Expected: 1)\n";
-    cout << "Manual test for 0010: " << bst.get("0010") << " (Expected: 2)\n";
-    // Add more tests as needed
-
-    // Proceed with original logic
     cout << "Enter a binary string: ";
     string binaryInput;
     cin >> binaryInput;
@@ -63,9 +65,6 @@ int main() {
     string hexOutput = convert(bst, binaryInput);
     cout << "Hexadecimal conversion: " << hexOutput << endl;
 
+    delete bst;
     return 0;
 }
-
-
-//  g++ element.cpp BST.cpp usecase.cpp -o usecase
-// ./usecase
