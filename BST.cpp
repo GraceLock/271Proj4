@@ -233,7 +233,7 @@ K BST<D, K>::max_key()
 }
 
 //=========================================================================
-// max_data
+// max_data 
 // Parameters: none
 // Return:
 //  the data value associated with the largest key in the tree
